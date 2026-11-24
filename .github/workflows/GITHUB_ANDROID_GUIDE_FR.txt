@@ -1,0 +1,42 @@
+COMPILATION DEPUIS ANDROID AVEC GITHUB ACTIONS
+==============================================
+
+Ce dépôt est configuré pour que GitHub compile le plugin sur une machine Windows
+x64 distante. Le téléphone Android sert à envoyer le code et télécharger le résultat.
+
+ÉTAPES
+------
+1. Ouvre https://github.com dans Chrome sur Android et connecte-toi.
+2. Crée un nouveau dépôt (New repository), par exemple :
+   ama-vocal-leveler
+   Choisis Public ou Private, puis Create repository.
+3. Décompresse AMA_VOCAL_LEVELER_Cubase12_Source.zip sur ton téléphone.
+4. Dans le dépôt GitHub, utilise Add file > Upload files.
+   Envoie tous les fichiers et dossiers du projet, y compris le dossier caché
+   .github/workflows et le fichier build-windows-vst3.yml qu'il contient.
+   Astuce : si le navigateur ne montre pas les dossiers cachés, utilise GitHub
+   Desktop sur un PC ou l'éditeur web github.dev; vérifie que le workflow apparaît
+   sous .github/workflows/build-windows-vst3.yml.
+5. Valide avec Commit changes sur la branche main.
+6. Ouvre l'onglet Actions du dépôt. Sélectionne
+   "Build AMA VOCAL LEVELER VST3 (Windows x64)".
+7. Si nécessaire, appuie sur Run workflow. Attends que toutes les étapes soient vertes.
+8. Ouvre l'exécution terminée, descends à Artifacts et télécharge
+   AMA-VOCAL-LEVELER-VST3-Windows-x64.
+9. Décompresse l'archive téléchargée. Elle doit contenir le dossier
+   "AMA VOCAL LEVELER.vst3".
+10. Transfère-le sur ton PC et copie-le dans :
+    C:\\Program Files\\Common Files\\VST3
+    Puis redémarre Cubase 12.
+
+IMPORTANT
+---------
+- Le fichier VST3 est produit par le runner Windows de GitHub, pas par Android.
+- GitHub Actions peut demander une connexion et l'activation des Actions.
+- Si la compilation échoue, ouvre l'exécution dans Actions et copie les dernières
+  lignes de l'erreur pour les faire corriger.
+- JUCE est récupéré depuis son dépôt officiel, version 8.0.10. Vérifie les
+  conditions de licence JUCE applicables à ton utilisation/distribution.
+- Ce projet est un prototype de nivellement dynamique; écoute et teste sur une
+  copie de ta session avant un usage professionnel. Le contrôle de crête de cette
+  première version n'est pas un limiteur look-ahead.

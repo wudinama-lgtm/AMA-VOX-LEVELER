@@ -1,0 +1,38 @@
+
+name: Build AMA VOCAL LEVELER VST3 Windows x64
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout plugin source
+        uses: actions/checkout@v4
+
+      - name: Checkout JUCE
+        shell: pwsh
+        run: |
+          git clone --depth 1 --branch 8.0.10 https://github.com/juce-framework/JUCE.git "$env:GITHUB_WORKSPACE/JUCE"
+
+      - name: Configure project
+        shell: pwsh
+        run: |
+          cmake -S . -B build -DJUCE_DIR="$env:GITHUB_WORKSPACE/JUCE" -A x64
+
+      - name: Build VST3
+        run: cmake --build build --config Release --parallel
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMA-VOCAL-LEVELER-VST3-Windows-x64
+          path: build/AMA_VOCAL_LEVELER_artefacts/Release/VST3/
+          if-no-files-found: error
+          retention-days: 14
+          
